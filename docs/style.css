@@ -26,6 +26,8 @@ body {
   max-width: 1000px;
   padding: 2em;
   margin: auto;
+  background-color: #03012c;
+  color: #ffffff;
 }
 
 h1 {
@@ -43,8 +45,14 @@ h2 {
 }
 
 .header img {
-  width: 50%;
-  object-fit: cover;
+    width: 52%;
+    object-fit: cover;
+    mask-image: linear-gradient(
+      to right,
+      black 0%,
+      black 70%,
+      transparent 100%
+    );
 }
 
 .grid {
@@ -54,17 +62,27 @@ h2 {
   margin-top: 2em;
 }
 
+.grid img {
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.grid a:hover img {
+  transform: scale(1.02);
+  opacity: 0.85;
+}
+
 .assignment a {
-  color: #000;
+  color: #ffffff;
   text-decoration: none;
 }
 
 .assignment a:hover {
-  color: #f06;
+  color: rgb(170, 132, 164);
 }
 
 .assignment img {
-  aspect-ratio: 1;
+  width: 90%;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
 }
 
