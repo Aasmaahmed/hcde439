@@ -82,11 +82,13 @@ h2 {
 
 
 .assignment img {
-  max-width: 100%;
-  height: auto;
+  width: 100%;
+  height: 290px;
+  object-fit: cover;
   display: block;
   border-radius: 8px;
 }
+
 
 .assignment p {
   margin-top: 0.5em;
