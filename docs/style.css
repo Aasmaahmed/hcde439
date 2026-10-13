@@ -90,6 +90,11 @@ h2 {
 }
 
 
+.assignment {
+  flex: 1;
+  min-width: 0;
+}
+
 .assignment p {
   margin-top: 0.5em;
   line-height: 1.6;
