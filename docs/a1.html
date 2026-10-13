@@ -4,39 +4,216 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
 
-    <title>Example Student's HCDE 439 Physical Computing Page!</title>
+    <title>Asma Al-Hakem's HCDE 439 Physical Computing Page!</title>
 
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <h1>Example Student's Assignment 1!</h1>
+    <h1>Assignment 1!</h1>
     <div class="header">
-      <img src="red-panda.jpg" />
-      <p>Here is all the documentation for assignment 1!</p>
+      <img src="HCDE 439 A1 Pic.JPG" />
+      <p>For assignment 1, I used 6 LED lights, 2 of the same color to create a pattern of lights blink! The pattern starts with lighting all LEDS then the LEDS of the same color, then each one idiviually.</p>
     </div>
 
     <div class="container">
       <div class="item">
-        Schematic:
-        <img src="image place holder.png" />
+        <h2>Schematic:</h2>
+        <p>Schematic of each LED, I used 100 ohms resistor for each circut based on the calculation showed. 100 ohms is the closest value available.</p>
+        <img src="HCDE 439 A1 Scematic.jpg" />
       </div>
       <div class="item">
-        Circut:
-        <img src="image place holder.png" />
+        <h2>Circut:</h2>
+        <p>Circut setup using LEDs, wires, resistors, and Arduino</p>
+        <img src="HCDE 439 A1 Circut.JPG" />
       </div>
-      <div class="item">
-        Firmware:
-        ..
-      </div>
-      <div class="item">
-        Circut's Operation:
-        ..
-      </div>
-      <div class="item">
-        Answers:
-        ..
-      </div>
+      <div class="item firmware">
+        <h2>Firmware:</h2>
+        <p>Ardunio code snippet:</p>
+        <code><pre>
+        // Added the LEDS as global variables
+        int RED1 = 13;
+        int RED2 = 12;
+        int GREEN1 = 11;
+        int GREEN2 = 10;
+        int YELLOW1 = 9;
+        int YELLOW2 = 8;
 
+
+        void setup() {
+          // put your setup code here, to run once:
+        pinMode(RED1, OUTPUT);
+        pinMode(RED2, OUTPUT);
+        pinMode(GREEN1, OUTPUT);
+        pinMode(GREEN2, OUTPUT);
+        pinMode(YELLOW1, OUTPUT);
+        pinMode(YELLOW2, OUTPUT);
+        }
+
+        void loop() {
+          // put your main code here, to run repeatedly:
+          // all light up
+          digitalWrite(RED1, HIGH);
+          digitalWrite(YELLOW1, HIGH);
+          digitalWrite(GREEN1, HIGH);
+          digitalWrite(GREEN2, HIGH);
+          digitalWrite(YELLOW2, HIGH);
+          digitalWrite(RED2, HIGH);
+          //wait for 1 second
+          delay(1000);
+
+          digitalWrite(RED1, LOW);
+          digitalWrite(YELLOW1, LOW);
+          digitalWrite(GREEN1, LOW);
+          digitalWrite(GREEN2, LOW);
+          digitalWrite(YELLOW2, LOW);
+          digitalWrite(RED2, LOW);
+
+          delay(1000);
+          // red only light up
+          digitalWrite(RED1, HIGH);
+          digitalWrite(YELLOW1, LOW);
+          digitalWrite(GREEN1, LOW);
+          digitalWrite(GREEN2, LOW);
+          digitalWrite(YELLOW2, LOW);
+          digitalWrite(RED2, HIGH);
+          // wait for 0.8 seconds so it blink a bit faster
+          delay(800);
+
+          // green only light up
+          digitalWrite(RED1, LOW);
+          digitalWrite(YELLOW1, HIGH);
+          digitalWrite(GREEN1, LOW);
+          digitalWrite(GREEN2, LOW);
+          digitalWrite(YELLOW2, HIGH);
+          digitalWrite(RED2, LOW);
+
+          delay(800);
+
+          // yellow only light up
+          digitalWrite(RED1, LOW);
+          digitalWrite(YELLOW1, LOW);
+          digitalWrite(GREEN1, HIGH);
+          digitalWrite(GREEN2, HIGH);
+          digitalWrite(YELLOW2, LOW);
+          digitalWrite(RED2, LOW);
+
+          delay(800);
+
+          // it repeats reversly, yellow light pu
+          digitalWrite(RED1, LOW);
+          digitalWrite(YELLOW1, LOW);
+          digitalWrite(GREEN1, HIGH);
+          digitalWrite(GREEN2, HIGH);
+          digitalWrite(YELLOW2, LOW);
+          digitalWrite(RED2, LOW);
+
+          delay(800);
+
+          // green light up
+          digitalWrite(RED1, LOW);
+          digitalWrite(YELLOW1, HIGH);
+          digitalWrite(GREEN1, LOW);
+          digitalWrite(GREEN2, LOW);
+          digitalWrite(YELLOW2, HIGH);
+          digitalWrite(RED2, LOW);
+
+          delay(800);
+
+          // red light up
+          digitalWrite(RED1, HIGH);
+          digitalWrite(YELLOW1, LOW);
+          digitalWrite(GREEN1, LOW);
+          digitalWrite(GREEN2, LOW);
+          digitalWrite(YELLOW2, LOW);
+          digitalWrite(RED2, HIGH);
+
+          delay(800);
+
+          //red1 light up on one side
+          digitalWrite(RED1, HIGH);
+          digitalWrite(YELLOW1, LOW);
+          digitalWrite(GREEN1, LOW);
+          digitalWrite(GREEN2, LOW);
+          digitalWrite(YELLOW2, LOW);
+          digitalWrite(RED2, LOW);
+          //wait for 0.08 seconds so if blink faster for indiviual LEDS like a wave
+          delay(80);
+
+          //green1 light up
+          digitalWrite(RED1, LOW);
+          digitalWrite(YELLOW1, HIGH);
+          digitalWrite(GREEN1, LOW);
+          digitalWrite(GREEN2, LOW);
+          digitalWrite(YELLOW2, LOW);
+          digitalWrite(RED2, LOW);
+
+          delay(80);
+
+          //yellow1 light up
+          digitalWrite(RED1, LOW);
+          digitalWrite(YELLOW1, LOW);
+          digitalWrite(GREEN1, HIGH);
+          digitalWrite(GREEN2, LOW);
+          digitalWrite(YELLOW2, LOW);
+          digitalWrite(RED2, LOW);
+
+          delay(80); 
+
+          //yellow2 lights up 
+          digitalWrite(RED1, LOW);
+          digitalWrite(YELLOW1, LOW);
+          digitalWrite(GREEN1, LOW);
+          digitalWrite(GREEN2, HIGH);
+          digitalWrite(YELLOW2, LOW);
+          digitalWrite(RED2, LOW);
+
+          delay(80);
+
+          //green2 lights up
+          digitalWrite(RED1, LOW);
+          digitalWrite(YELLOW1, LOW);
+          digitalWrite(GREEN1, LOW);
+          digitalWrite(GREEN2, LOW);
+          digitalWrite(YELLOW2, HIGH);
+          digitalWrite(RED2, LOW);
+
+          delay(80);
+
+          //red2 lights up
+          digitalWrite(RED1, LOW);
+          digitalWrite(YELLOW1, LOW);
+          digitalWrite(GREEN1, LOW);
+          digitalWrite(GREEN2, LOW);
+          digitalWrite(YELLOW2, LOW);
+          digitalWrite(RED2, HIGH);
+
+          delay(80); 
+
+          // all dim 
+          digitalWrite(RED1, LOW);
+          digitalWrite(YELLOW1, LOW);
+          digitalWrite(GREEN1, LOW);
+          digitalWrite(GREEN2, LOW);
+          digitalWrite(YELLOW2, LOW);
+          digitalWrite(RED2, LOW);
+
+          delay(1000); 
+        }
+        </code></pre>
+      </div>
+      <div class="item">
+        <h2>Circut's Operation:</h2>
+        <p>a GIF showing the blinking pattern of the 6 LEDs.</p>
+        <img src="HCDE439 A1 GIF.GIF"/>
+      </div>
+      <div class="item">
+        <h2>Answers:</h2>
+        <P>Additional questions answers:</P>
+        <p>1: <img src="HCDE 439 A1 Graph.jpg" /></p>
+        <p>2: There are 12 pins in the Arduino board, so 12 LEDS can blink independently. Each LED current is 20 mA, the total current is: 12 x 20mA = 240mA. This exceeds the recommended total current limit for Arduino pins. Therefore, reducing the current to 10mA per LED, gives us a total current of 120mA which is within the recommended current limit. </p>
+        <p>3: The LEDs need a delay of approximately 10 ms or less between turning on and off, which equals 50 flashes per second. At this speed, the blinking becomes difficult to notice, and the LEDs appear continuously lit.</p>
+        <p>4: AI was only used for the organization of the website (layouts) not the assignment requirments</p>
+        
     </div>
 
   </body>
