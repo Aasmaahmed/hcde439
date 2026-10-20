@@ -1,18 +1,175 @@
-<!DOCTYPE html>
+<!DOCTYPE htm2>
 <html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
 
-    <title>Example Student's HCDE 439 Physical Computing Page!</title>
+    <title>Asma Al-Hakem's HCDE 439 Physical Computing Page!</title>
 
     <link href="style.css" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <h1>Example Student's Assignment 2!</h1>
+    <h1>Assignment 2!</h1>
     <div class="header">
-      <img src="red-panda.jpg" />
-      <p>Here is all the documentation for assignment 2!</p>
+      <img src="HCDE 439, A2 Circuit.JPG" />
+      <p>For Assignment 2, I created an interactive light-up game using three LEDs, each connected to its own button. The LEDs light up randomly, and when the corresponding button is pressed, the LED gradually fades out. Once the LED fades out, another LED is randomly selected and lights up, repeating the process.</p>
     </div>
+
+    <div class="container">
+      <div class="item">
+        <h2>Schematic:</h2>
+        <p>Here are two schematic drawings: one showing the three LEDs connected to the Arduino output pins and ground, and another showing the three buttons connected to the Arduino 5v input and ground. I used 100 ohms resistor for each LED based on the calculation showed, as it was the closest value available. I also used 10k ohm resistor for each button to limit the current </p>
+        <img src="HCDE 439, A2 Schematic (2).jpg" />
+      </div>
+      <div class="item">
+        <h2>Circut:</h2>
+        <p>Circut setup using LEDs, wires, resistors, buttons, and Arduino</p>
+        <img src="HCDE 439, A2 Circuit.JPG" />
+      </div>
+      <div class="item firmware">
+        <h2>Firmware:</h2>
+        <p>Ardunio code snippet:</p>
+        <code><pre>
+        // constants won't change. They're used here to set pin numbers:
+        const int buttonPin1 = 7;  // the number of the pushbutton pin
+        const int buttonPin2 = 4;
+        const int buttonPin3 = 2;
+        const int ledPin1 = 10;    // the number of the LED pin
+        const int ledPin2 = 11;    
+        const int ledPin3 = 5;
+        // variables will change:
+        int buttonState1 = 0;  // variable for reading the pushbutton status
+        int buttonState2 = 0;
+        int buttonState3 = 0;
+
+        // a variable that stores which LED is selected
+        int randomLED;
+        // a variable that checks if an LED is on or off before randomly selecting an LED
+        bool ledActive = false;
+
+        void setup() {
+          // initialize the LED pin as an output:
+          pinMode(ledPin1, OUTPUT);
+          pinMode(ledPin2, OUTPUT);
+          pinMode(ledPin3, OUTPUT);
+
+          // initialize the pushbutton pin as an input:
+          pinMode(buttonPin1, INPUT);
+          pinMode(buttonPin2, INPUT);
+          pinMode(buttonPin3, INPUT);
+
+          //reads from pin to make the random selection of color different each time the Arduino restart
+          randomSeed(analogRead(A0));
+        }
+
+        void loop() {
+
+          if (ledActive == false){
+
+            //turn all LEDs off
+            digitalWrite(ledPin1, LOW);
+            digitalWrite(ledPin2, LOW);
+            digitalWrite(ledPin3, LOW);
+            //randomly select an LED (1,2,3)
+            randomLED = random(1,4);
+            ledActive = true;
+
+            //turn on the randomly selected LED
+            if (randomLED == 1){
+              digitalWrite(ledPin1, HIGH);
+            }
+            else if (randomLED == 2){
+              digitalWrite(ledPin2, HIGH);
+            }
+            else if (randomLED == 3){
+              digitalWrite(ledPin3, HIGH);
+            }
+          }
+          // reads which button is pressed
+          buttonState1 = digitalRead(buttonPin1);
+          buttonState2 = digitalRead(buttonPin2);
+          buttonState3 = digitalRead(buttonPin3);
+          // checks if led is on and button pressed it fades from 255 to 0
+          if (randomLED == 1 && buttonState1 == HIGH){
+              for (int i = 255; i >= 0; i--){
+              analogWrite(ledPin1, i);
+            delay(11);
+            }
+            ledActive = false;
+          }
+
+          else if (randomLED == 2 && buttonState2 == HIGH){
+            //digitalWrite(ledPin2, LOW);
+            for (int i = 255; i >= 0; i--){
+              analogWrite(ledPin2, i);
+              delay(11);
+            }
+            ledActive = false;
+          }
+
+          else if (randomLED == 3 && buttonState3 == HIGH){
+            //digitalWrite(ledPin3, LOW);
+            for (int i = 255; i >= 0; i--){
+              analogWrite(ledPin3, i);
+              delay(11);
+            }
+            ledActive = false;
+          }
+        
+
+          // This was for testing that each led is connected to one button and they all work
+          /*// read the state of the pushbutton value:
+          buttonState1 = digitalRead(buttonPin1);
+          buttonState2 = digitalRead(buttonPin2);
+          buttonState3 = digitalRead(buttonPin3);
+
+          // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
+          if (buttonState1 == HIGH) {
+            // turn LED on:
+            digitalWrite(ledPin1, HIGH);
+          } else {
+            // turn LED off:
+            digitalWrite(ledPin1, LOW);
+          }
+
+          if (buttonState2 == HIGH) {
+            // turn LED on:
+            digitalWrite(ledPin2, HIGH);
+          } else {
+            // turn LED off:
+            digitalWrite(ledPin2, LOW);
+          }
+
+          if (buttonState3 == HIGH) {
+            // turn LED on:
+            digitalWrite(ledPin3, HIGH);
+          } else {
+            // turn LED off:
+            digitalWrite(ledPin3, LOW);
+          }
+
+        */
+
+        }
+
+        </code></pre>
+      </div>
+      <div class="item">
+        <h2>Circut's Operation:</h2>
+        <p>Here is a link to the circuit operation:</p>
+        <a href="https://youtu.be/3NB8CdFILac">Operation Link</a>
+      </div>
+      <div class="item">
+        <h2>Answers:</h2>
+        <P>Additional questions answers:</P>
+        <p>1: <img src="HCDE 439, A2 Chart.jpg" /></p>
+        <p>2: Since the current through each LED is 20mA then the total current for the 3 LEDS will be 60 mA (20 x 3) which is below the total Arduino current draw limit of 200 mA. 
+        The battery life for three LEDS connected to 1200 mAh battery would be 1200 over 60 which is 20 hours. However, the circuit would run less than 20h because other components also consume some power.
+        </p> <img src="HCDE 439, A2 battery life.jpg"/>
+        <p>3: I measured the voltage across the red LED while it was on, and the reading ranged from 1.9 V to 2.01 V. This closely matches the theoretical forward voltage of a red LED, which is approximately 2 V.</p>
+        <p>4: I used AI to help me understand how to use the `random()` function to make the LEDs light up randomly. This helped me learn how to implement random LED selection and combine it with the button controls using a Boolean (`bool`) variable.</p>
+        
+    </div>
+
   </body>
 </html>
