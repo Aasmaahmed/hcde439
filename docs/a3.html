@@ -1,0 +1,133 @@
+<!DOCTYPE htm2>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+    <title>Asma Al-Hakem's HCDE 439 Physical Computing Page!</title>
+
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>Assignment 3!</h1>
+    <div class="header">
+      <img src="HCDE 439 A3 circuit.JPG" />
+      <p>For Assignment 3, I built a temperature alarm system using an Arduino, a thermistor, an LED, and a buzzer. I used a voltage divider to measure temperature changes and programmed the LED and buzzer to activate when the temperature reached a certain level.</p>
+    </div>
+    <div class="container">
+      <div class="item">
+        <h2>Schematic:</h2>
+        <p>
+        I initially used a 10 kΩ resistor as an assumed value for R2 in my voltage divider circuit. I then used the Arduino Serial Monitor to observe the raw sensor readings as I changed the thermistor's temperature by holding it between my fingers.
+        At room temperature, the raw sensor reading was approximately 514. As I warmed the thermistor with my fingers, the reading gradually increased to a maximum of 606. After releasing the thermistor and allowing it to cool, the reading started decreasing until it returned close to its original value.
+        Using the initial 10 kΩ resistor and the raw sensor readings, I calculated the thermistor's resistance at the lowest and highest temperatures:
+        Room temperature (514): 9,903 ohms, Warmed with fingers (606): 6,881 ohms.
+        I then used the geometric mean to calculate the appropriate R2 value which is approximately 8.3 k ohms.
+        Since the calculated resistance was relatively close to the 10 kΩ resistor already used in my circuit, I decided to keep the 10 kΩ resistor.
+        </p>
+    
+        <img src="HCDE 439 A3 schematic.jpg" />
+      </div>
+      <div class="item">
+        <h2>Circut:</h2>
+        <p>Circut setup using LED, wires, resistors, thermistor, buzzer, and Arduino</p>
+        <img src="HCDE 439 A3 circuit.JPG" />
+      </div>
+      <div class="item firmware">
+        <h2>Firmware:</h2>
+        <p>Ardunio code snippet:</p>
+        <code><pre>
+        // constant the do not change
+        const int ledPin = 10;
+        const int buzzerPin = 13;
+        const int sensorPin = A0;
+
+        // variables
+        int sensorValue = 0;
+        int brightness = 0;
+        int minTempval = 514;
+        int maxTempval = 606;
+        int frequency = 0;
+
+        void setup() {
+            // setting the LED and buzzer as output 
+            pinMode(ledPin, OUTPUT);
+            pinMode(buzzerPin, OUTPUT);
+            // start serial communication
+            Serial.begin(9600);
+        }
+
+        void loop() {
+            //reading current values from the thermistor 
+            sensorValue = analogRead(sensorPin);
+            // converting the reading into voltage
+            float voltage = sensorValue * (5.0 / 1023.0);
+            // print the voltages at different times (will help me with graphing voltage change)
+            Serial.print("Time (seconds): ");
+            Serial.print(millis() / 1000.0);
+            Serial.print(" | Voltage: ");
+            Serial.println(voltage);
+            // printing raw values to observe temperture change
+            Serial.print("Raw sensor reading: ");
+            Serial.println(sensorValue);
+
+            // Set the alarm threshold at 80% of the measured sensor range
+            int threshold = minTempval + (maxTempval - minTempval) * 0.8;
+            // Check if the sensor reading has reached the alarm threshold
+            if ( sensorValue >= threshold){
+                //keep the sensor readings withen the measured minimum and maximum values
+                int mappedValue = constrain(sensorValue, minTempval, maxTempval);
+                //map the readings to LED lighting and buzzer frequency
+                brightness = map(mappedValue, minTempval, maxTempval, 0, 255);
+                frequency = map(mappedValue, minTempval, maxTempval, 500, 600);
+                // print when the alarm is active as the threshold is met
+                Serial.println(" Alarm activated");
+                //the output takes the reading from the change in temp
+                // and turns on the alarm system by turning on the buzzer
+                tone(buzzerPin, frequency);
+                // allows the led to blink when the alarm is on
+                analogWrite(ledPin, brightness);
+                delay(500);
+                analogWrite(ledPin, 0);
+                delay(500);
+            }
+            // if the condition is not met, turn off the LED
+            // and buzzer when the temperature is below the threshold
+            else{
+                analogWrite(ledPin, 0);
+                noTone(buzzerPin);
+                delay(500);
+            }
+        }
+
+        </code></pre>
+      </div>
+      <div class="item">
+        <h2>Circut's Operation:</h2>
+        <p>Here is a link to the circuit operation:</p>
+        <a href="https://youtu.be/EJ6RorhOP7M">Operation Link</a>
+      </div>
+      <div class="item">
+        <h2>Answers:</h2>
+        <P>Additional questions answers:</P>
+        <p>1:The variable resistor (thermistor) can be either R1 or R2 in a voltage divider. However, its position changes how the output voltage responds to temperature.
+        For example, I used my measured thermistor resistance range of 7.3 kΩ to 9.9 kΩ and a fixed 10 kΩ resistor to calculate the output voltage in both scenarios, as shown in my calculations below.
+        In the first scenario, the thermistor is R1. When the thermistor is at room temperature (9.9 kΩ), the output voltage is approximately 2.51V. As the thermistor warms up, its resistance decreases to 7.3 kΩ, causing the output voltage to increase to approximately 2.89V.
+        In the second scenario, the thermistor is R2. At room temperature (9.9 kΩ), the output voltage is approximately 2.49V. As the thermistor warms up and its resistance decreases to 7.3 kΩ, the output voltage decreases to approximately 2.11V.
+        This happens because of the voltage divider equation, Vout = Vin × R2 / (R1 + R2). When R2 becomes much larger than R1, the output voltage approaches 5V. On the other hand, when R1 becomes much larger than R2, the output voltage approaches 0V.
+        Therefore, both configurations work, but the voltage change is different depending on where the thermistor is placed.
+        </p><img src="HCDE 439 A3 question1.jpg" />
+        <p>2: Graph of voltage at v measured vs time</p>
+             <p>The graph shows how the voltage at A0 changed as I warmed and cooled the thermistor. When I held the thermistor between my fingers, the voltage increased from approximately 2.5V to 2.9V because the thermistor's resistance decreased as its temperature increased. After releasing the thermistor, the voltage gradually decreased back toward 2.5V as it cooled down. This shows how changes in temperature affect the voltage measured by the Arduino.
+        </p> <img src="HCDE 439 A3 graph.jpg"/>
+        <p>3: If we had a 16-bit ADC and 10-bit PWM, we would need to change the values in the map() function. A 16-bit ADC reads values from 0 to 65,535 instead of 0 to 1,023, and 10-bit PWM uses values from 0 to 1,023 instead of 0 to 255.
+        For example, if we used the full range, the code would look like this:
+        map(sensorValue, 0, 65535, 0, 1023);
+        In my project, I used the minimum and maximum readings I measured from the thermistor instead of the full range. So I would need to measure those values again with the 16-bit ADC and update them in my code. I would also change the output range from 0–255 to 0–1023.
+        This would allow the sensor to pick up smaller voltage changes and give me more control over how bright the LED gets.</p>
+        <p>*I used AI to understand how to calculate the threshold value for activating the LED and buzzer, and the tone() function</p>
+        
+    </div>
+
+  </body>
+</html>
