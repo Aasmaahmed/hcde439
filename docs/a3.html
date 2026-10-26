@@ -18,12 +18,12 @@
       <div class="item">
         <h2>Schematic:</h2>
         <p>
-        I initially used a 10 k ohms resistor as an assumed value for R2 in my voltage divider circuit. I then used the Arduino Serial Monitor to observe the raw sensor readings as I changed the thermistor's temperature by holding it between my fingers.
+        I initially used a 10k ohms resistor as an assumed value for R2 in my voltage divider circuit. I then used the Arduino Serial Monitor to observe the raw sensor readings as I changed the thermistor's temperature by holding it between my fingers.
         At room temperature, the raw sensor reading was approximately 514. As I warmed the thermistor with my fingers, the reading gradually increased to a maximum of 606. After releasing the thermistor and allowing it to cool, the reading started decreasing until it returned close to its original value.
         Using the initial 10 kΩ resistor and the raw sensor readings, I calculated the thermistor's resistance at the lowest and highest temperatures:
         Room temperature (514): 9,903 ohms, Warmed with fingers (606): 6,881 ohms.
         I then used the geometric mean to calculate the appropriate R2 value which is approximately 8.3 k ohms.
-        Since the calculated resistance was relatively close to the 10 k ohms resistor already used in my circuit, I decided to keep the 10 kΩ resistor.
+        Since the calculated resistance was relatively close to the 10k ohms resistor already used in my circuit, I decided to keep the 10k ohms resistor.
         </p>
     
         <img src="HCDE 439 A3 schematic.jpg" />
@@ -113,7 +113,7 @@
         <h2>Answers:</h2>
         <P>Additional questions answers:</P>
         <p>1:The variable resistor (thermistor) can be either R1 or R2 in a voltage divider. However, its position changes how the output voltage responds to temperature.
-        For example, I used my measured thermistor resistance range of 6.8 k ohms to 9.9 k ohms and a fixed 10 k ohms resistor to calculate the output voltage in both scenarios, as shown in my calculations below.
+        For example, I used my measured thermistor resistance range of 6.8 k ohms to 9.9 k ohms and a fixed 10k ohms resistor to calculate the output voltage in both scenarios, as shown in my calculations below.
         In the first scenario, the thermistor is R1. When the thermistor is at room temperature (9.9 k ohms), the output voltage is approximately 2.51V. As the thermistor warms up, its resistance decreases to 6.8 k ohms, causing the output voltage to increase to approximately 2.98V.
         In the second scenario, the thermistor is R2. At room temperature (9.9 k ohms), the output voltage is approximately 2.48V. As the thermistor warms up and its resistance decreases to 6.3 k ohms, the output voltage decreases to approximately 2.02V.
         This happens because of the voltage divider equation, Vout = Vin × R2 / (R1 + R2). When R2 becomes much larger than R1, the output voltage approaches 5V. On the other hand, when R1 becomes much larger than R2, the output voltage approaches 0V.
