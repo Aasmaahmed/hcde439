@@ -106,6 +106,8 @@
         <h2>Circut's Operation:</h2>
         <p>Here is a link to the circuit operation:</p>
         <a href="https://youtu.be/EJ6RorhOP7M">Operation Link</a>
+        <p>Example output form the serial monitor:</p>
+        <img src="HCDE 439 A3 serial reading.png" />
       </div>
       <div class="item">
         <h2>Answers:</h2>
@@ -125,8 +127,10 @@
         map(sensorValue, 0, 65535, 0, 1023);
         In my project, I used the minimum and maximum readings I measured from the thermistor instead of the full range. So I would need to measure those values again with the 16-bit ADC and update them in my code. I would also change the output range from 0–255 to 0–1023.
         This would allow the sensor to pick up smaller voltage changes and give me more control over how bright the LED gets.</p>
-        <p>*I used AI to understand how to calculate the threshold value for activating the LED and buzzer, and the tone() function</p>
-        
+      </div>
+    <div>
+        <p>*I used AI to understand how to calculate the threshold value for activating the LED and buzzer.</p></div>
+        <div><p>Some of the maximum sensor readings may be slightly different throughout this assignment because I ran the experiment multiple times. Each run produced slightly different readings depending on how much I warmed the thermistor with my fingers.</p>
     </div>
 
   </body>
