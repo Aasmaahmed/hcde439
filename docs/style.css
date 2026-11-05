@@ -99,6 +99,11 @@ h2 {
   line-height: 1.6;
 }
 
+.assignment h2 {
+  min-height: 80px;
+  margin-top: 0;
+  margin-bottom: 10px;
+}
 .container {
   display: flex;
   flex-direction: column;
