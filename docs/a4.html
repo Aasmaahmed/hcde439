@@ -1,0 +1,145 @@
+<!DOCTYPE htm1>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+    <title>Asma Al-Hakem's HCDE 439 Physical Computing Page!</title>
+
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>Assignment 4!</h1>
+    <div class="header">
+      <img src="HCDE 439, A4 Pic.jpg" />
+      <p> For this assignment, I built a smart door that opens automatically when an ultrasonic sensor detects someone approaching within 15 cm. I also added a capacitive touch sensor to allow the door to open manually. A servo motor controls the door's movement, while green and red LEDs indicate whether the door is open or closed.</p>
+    </div>
+    <div class="container">
+      <div class="item">
+        <h2>Schematic:</h2>
+        <p>
+        Schematic and idea sketches
+        </p>
+    
+        <img src="HCDE 439, A4 schematic.jpg" />
+      </div>
+      <div class="item">
+        <h2>Circut:</h2>
+        <p>Circut setup using LEDs, wires, resistors, built capacitive sensor, ultrasonic sensor, servo motor and Arduino</p>
+        <p>I used cardboard to demonstrate the moving door.</p>
+        <img src="HCDE 439, A4 circuit.JPG" />
+      </div>
+      <div class="item firmware">
+        <h2>Firmware:</h2>
+        <p>Ardunio code snippet:</p>
+        <code><pre>
+       // adding libraries for ultrasonic new ping, servo motor, and capacitive sensor
+        #include NewPing.h
+
+        #include Servo.h
+
+        #include CapacitiveSensor.h
+
+        // create Servo object to control a servo
+        Servo myservo;  
+        // set pin 13 as the sender pin and pin 12 as the sensor or receiver pin
+        CapacitiveSensor   touchSensor = CapacitiveSensor(13,12);        
+        // ultrasound pin constants
+        const int trigPin = 7;
+        const int echoPin = 8;
+        // Led constants
+        const int greenLed = 2;
+        const int redLed = 4;
+        // maximum ultrasonic sensing distance we want to ping for (in centimeters).
+        const int maxDistance = 200;
+        // initialize the ultrasonic sensor using the Newping library
+        NewPing sonar(trigPin, echoPin, maxDistance);
+        // setting threshold value for capacitive sensor, so the door opens when it reaches it
+        int threshold = 500;
+
+        void setup() {
+            // initialize serial communication
+            Serial.begin(9600);
+            // Setting output and input modes for led
+            pinMode(greenLed, OUTPUT);
+            pinMode(redLed, OUTPUT);
+            // attaches the servo on pin 10 to the Servo object
+            myservo.attach(10);  
+            // intialize the door to be closed
+            myservo.write(0);
+            digitalWrite(redLed, HIGH);
+            digitalWrite(greenLed, LOW);
+
+        }
+
+        void loop() {
+            //create a veriable for detecting distance in cm
+            unsigned int distance = sonar.ping_cm();
+            // printing out distance to serial monitor
+            Serial.print("Distance: ");
+            Serial.print(distance);
+            Serial.println(" cm");
+
+            delay(300);
+
+            // create a variable to measure the capacitive sensor value
+            long touchValue =  touchSensor.capacitiveSensor(30);
+            // printing the touch value to confirm the threshold
+            Serial.print("Touch Value: ");
+            Serial.println(touchValue);
+
+            delay(300);
+            // check if an object is approaching within 15 cm or if capacitive sensor is touched to open door
+            if ((distance < 15 && distance > 0) || touchValue > threshold ){
+            digitalWrite(greenLed, HIGH);
+            digitalWrite(redLed, LOW);
+            myservo.write(90); // open door
+            }
+            // if not close door if object is beyond 20 cm and the capacitive sensor is not touched
+            else if ((distance > 20 || distance == 0) && touchValue <= threshold ){
+                digitalWrite(greenLed, LOW);
+                digitalWrite(redLed, HIGH);
+                myservo.write(0); // close door
+            }
+
+        }
+
+        </code></pre>
+      </div>
+      <div class="item">
+        <h2>Circut's Operation:</h2>
+        <p>Here is a link to the circuit operation:</p>
+        <a href="https://youtube.com/shorts/rPAZGxLR6bs?feature=share">Operation Link</a>
+        <p><a href="https://youtube.com/shorts/-wN3I9HHdac?feature=share">Door Activation Demo (15cm)</a></p>
+      </div>
+      <div class="item">
+        <h2>Answers:</h2>
+        <P>Additional questions answers:</P>
+        <p>1: <strong>Motor Pulse Widths at Different Angles</strong> </p>
+
+        <p>These graphs show how the servo motor uses different pulse widths to control its position: 1 ms at 0°, 1.5 ms at 90°, and 2 ms at 180°. Each pulse repeats every 20 ms.     
+        </p><img src="HCDE 439, A4 graph 1.jpeg" />
+        <p><strong> Motor Voltage Over Time </strong></p>
+        <img src="HCDE 439, A4 graph2.jpeg" />
+        <p>2: I would take multiple sensor readings and sort them from smallest to largest, then select the median instead of the average. The average would include the erroneous reading in its calculation, which could affect the result. Using the median reduces the impact of occasional incorrect readings because it selects the middle value rather than averaging all the values. This helps the program produce more reliable measurements.</p>
+
+        <img src="HCDE 439, A4 Question 2 answer.png"/>
+        <p>3: For this situation, averaging would work best because we do not have significantly incorrect readings, but rather small fluctuations in the measurements. Therefore, taking multiple readings and calculating their average would help reduce these fluctuations and provide a more accurate and stable measurement.</p>
+        <img src="HCDE 439, A4 Question 3 answer.png"/>
+
+        <P>4: I used AI to determine which components in my Arduino kit were input or output and which ones have a required library. This helped me decide which components to use for my smart door project.
+        I also used AI to debug my circuit and code. For example, when my ultrasonic sensor was returning a distance of 0 cm, I asked AI to help identify the issue. After troubleshooting, I discovered that I had forgotten to connect the sensor to the 5V and GND pins. Another issue occurred when my servo motor stopped moving after I attached it to the cardboard door. I used AI to help me understand the problem and learned that the door was creating mechanical resistance. I adjusted the mounting so the servo horn could rotate freely without rubbing against the cardboard.
+        Additionally, I used AI to better understand how servo motors use pulse widths to control their position and how the pulse width changes as the motor rotates.
+        <p>Examples of prompts I used:</p>
+        <ul>
+        <li>"Which components in my Arduino kit are input / output, and which require libraries?"</li>
+        <li>"Why is my ultrasonic sensor reading 0 cm?"</li>
+        <li>"Why does my servo motor make a small sound but not move when attached to the door?"</li>
+        <li>"How can I make the servo horn not touch the door while still being able to open it?"</li>
+        <li>"How does pulse width change when a servo motor moves from 0 to 180 degrees?"</li>
+        </ul></P>
+      </div>
+
+
+  </body>
+</html>

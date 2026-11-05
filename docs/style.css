@@ -45,7 +45,7 @@ h2 {
 }
 
 .header img {
-    width: 52%;
+    width: 60%;
     object-fit: cover;
     mask-image: linear-gradient(
       to right,
@@ -122,20 +122,21 @@ h2 {
 
 
 .firmware pre {
-  background-color: #1c1c40;
-  color: #f5f5f5;
-  padding: 20px;
-  border-radius: 10px;
-  border: 1px solid #34345c;
+    background-color: #1c1c40;
+    color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #34345c;
 
-  white-space: pre-wrap;
-  overflow-wrap: break-word;
-  text-align: left;
-  font-family: Consolas, monospace;
-  font-size: 14px;
-  line-height: 1.6;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    text-align: left;
+    font-family: Consolas, monospace;
+    font-size: 14px;
+    line-height: 1.6;
 
-  max-width: 100%;
-  box-sizing: border-box;
+    width: 120%;
+    max-width: none;
+    box-sizing: border-box;
 }
 
