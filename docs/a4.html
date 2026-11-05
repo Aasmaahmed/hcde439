@@ -21,7 +21,7 @@
         Schematic and idea sketches
         </p>
     
-        <img src="HCDE 439, A4 schematic.jpg" />
+        <img src="HCDE 439,A4 schematic 1.jpg" />
       </div>
       <div class="item">
         <h2>Circut:</h2>
@@ -57,7 +57,7 @@
         const int maxDistance = 200;
         // initialize the ultrasonic sensor using the Newping library
         NewPing sonar(trigPin, echoPin, maxDistance);
-        // setting threshold value for capacitive sensor, so the door opens when it reaches it
+        // setting threshold value for capacitive sensor, so the door opens when it reaches it (I choose 500 based on reading I got on serial monitor)
         int threshold = 500;
 
         void setup() {
@@ -93,6 +93,7 @@
 
             delay(300);
             // check if an object is approaching within 15 cm or if capacitive sensor is touched to open door
+            // I chose 15 cm for the door to open only if an object is close to it
             if ((distance < 15 && distance > 0) || touchValue > threshold ){
             digitalWrite(greenLed, HIGH);
             digitalWrite(redLed, LOW);
