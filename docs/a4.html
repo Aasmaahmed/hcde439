@@ -28,6 +28,9 @@
         <p>Circut setup using LEDs, wires, resistors, built capacitive sensor, ultrasonic sensor, servo motor and Arduino.</p>
         <p>I used cardboard to demonstrate the moving door.</p>
         <img src="HCDE 439, A4 circuit.JPG" />
+        <p>Resistor values I used:</p>
+        <img src="HCDE 439,A4 values.JPG" />
+
       </div>
       <div class="item firmware">
         <h2>Firmware:</h2>
@@ -133,10 +136,15 @@
         <p>Examples of prompts I used:</p>
         <ul>
         <li>"Which components in my Arduino kit are input / output, and which require libraries?"</li>
+        <p>Output: Suggested different parts including servo motor, ultrasonic sensor, and capacitive touch sensor. Explained that the Servo, NewPing, and CapacitiveSensor libraries could be used to control these components.</p>
         <li>"Why is my ultrasonic sensor reading 0 cm?"</li>
+        <p>Output: Explained that a reading of 0 cm could mean the ultrasonic sensor was not receiving an echo. Suggested checking the wiring, especially the 5V, GND, TRIG, and ECHO connections. I discovered that the sensor was missing its power and ground connections.</p>
         <li>"Why does my servo motor make a small sound but not move when attached to the door?"</li>
+        <p> Output: Explained that the servo could be experiencing mechanical resistance, insufficient power, or an obstruction. Suggested checking whether the servo horn could rotate freely. I found that the horn was rubbing against the cardboard, preventing the door from moving.</p>
         <li>"How can I make the servo horn not touch the door while still being able to open it?"</li>
+        <p>Output: Suggested repositioning the servo motor or adding a spacer to create enough clearance between the servo horn and the cardboard door. Also recommended testing the servo at 0° and 90° to make sure the horn could rotate freely without rubbing against the cardboard or preventing the door from opening.</p>
         <li>"How does pulse width change when a servo motor moves from 0 to 180 degrees?"</li>
+        <p>Output: Explained that a servo motor uses repeated control pulses to determine its position. In the simplified model used in class, a 1 ms pulse corresponds to 0°, 1.5 ms to 90°, and 2 ms to 180°, with a period of approximately 20 ms. Also explained that the code increases the angle by 1° every 100 ms.</p>
         </ul></P>
       </div>
 
