@@ -44,9 +44,9 @@
 
         R = V / I = 6V / 0.8A = 7.5 ohms.
 
-        Then I used this resistance to estimate the stall current at my 5V supply:
+        Then I used this resistance to estimate the stall current at my 5V supply: 
 
-        I = V / R = 5V / 7.5 ohms = 0.667A = 667mA.
+         I = V / R = 5V / 7.5 ohms = 0.667A = 667mA.
 
         The IRLZ44N MOSFET has a maximum continuous Drain current rating of 47A at a case temperature of 25°C. Comparing the estimated motor stall current to this rating:
 
@@ -220,7 +220,7 @@
 
         </code></pre>
 
-        <P>4: I used AI to help me check my circuit connections since I was not familiar with the power supply module. I also used it to debug my readings and code. One problem I faced was that the IR receiver stopped responding to button presses when the motor speed increased, and the Serial Monitor kept showing a command value of 0. AI helped me understand that electrical noise from the motor could be interfering with the IR receiver. To improve this, I added two ceramic capacitors, one across the motor and another across the IR receiver's power connections. I also connected the IR receiver's ground directly to the Arduino GND and updated my code to ignore repeated and invalid commands. These changes improved the remote's response, although some lag remained at higher motor speeds. I also discussed these issues with the instructor who recommened adding the 2 capacitors to reduce the noise .</P>
+        <P>4: I used AI to help me check my circuit connections since I was not familiar with the power supply module. I also used it to debug my readings and code. One problem I faced was that the IR receiver stopped responding to button presses when the motor speed increased, and the Serial Monitor kept showing a command value of 0. AI helped me understand that electrical noise from the motor could be interfering with the IR receiver. To improve this, I added two ceramic capacitors, one across the motor and another across the IR receiver's power connections. I also connected the IR receiver's ground directly to the Arduino GND and updated my code to ignore repeated and invalid commands. These changes improved the remote's response, although some lag remained at higher motor speeds. I also discussed these issues with the instructor who recommened adding the 2 capacitors to reduce the noise. Lastly, I used AI to help me with motor current calculation.</P>
 
         <p>Examples of prompts I used:</p>
         <ul>
