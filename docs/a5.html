@@ -1,0 +1,211 @@
+<!DOCTYPE htm1>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0" />
+
+    <title>Asma Al-Hakem's HCDE 439 Physical Computing Page!</title>
+
+    <link href="style.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <h1>Assignment 5!</h1>
+    <div class="header">
+      <img src="HCDE 439, A5 pic.JPG" />
+      <p> For this assignment, I built a circuit that uses an IR remote to control the speed of a DC motor. I used an IR receiver to detect button presses and an N-MOSFET to control the motor with PWM. The plus and minus buttons adjust the motor speed, while the 0 button stops it. I also used a flyback diode to protect the circuit and an external power supply to power the motor.</p>
+    </div>
+    <div class="container">
+      <div class="item">
+        <h2>Schematic:</h2>
+        <p>
+        Schematic:
+        </p>
+        <img src="HCDE 439, A5 Schematic.jpg" />
+      </div>
+      <div class="item">
+        <h2>Circut:</h2>
+        <p>Circut setup usingArduino Uno, DC motor as my high-load output device because it can draw more current than an Arduino pin can safely provide, IRLZ44N N-MOSFET, IR receiver and remote, External 5V power supply, 1N4007 flyback diode, 2 104pf ceramic capacitors.</p>
+        <img src="HCDE 439, A5 Circuit.jpg" />
+
+      </div>
+      <div class="item firmware">
+        <h2>Firmware:</h2>
+        <p>Ardunio code snippet:</p>
+        <code><pre>
+       // Include the IR remote library
+        #include IRremote.hpp
+        // IR receiver signal connects to pin 7
+        const int IR_PIN = 7;  
+        // MOSFET gate control will use PWM pin 9
+        const int MOTOR_PIN = 9;
+        //  intializing a variable to store the motor speed 
+        int motorSpeed = 0;
+
+        void setup() {
+            // Start Serial Monitor to display remote button codes
+            Serial.begin(9600);
+            //Sets the motor control pin 9 as an output, it starts LOW state on Arduino
+            pinMode (MOTOR_PIN, OUTPUT);
+            // Makes the motor off initailly 
+            analogWrite(MOTOR_PIN, 0);
+            // Initialize the IR receiver on pin 7
+            IrReceiver.begin(IR_PIN, ENABLE_LED_FEEDBACK);
+
+        }
+
+        void loop() {
+            // Check whether the receiver detected an IR signal
+            if (IrReceiver.decode()) {
+                // Check if the received signal is not a repeated or invalid command
+                if (!(IrReceiver.decodedIRData.flags & IRDATA_FLAGS_IS_REPEAT)
+                && IrReceiver.decodedIRData.protocol != UNKNOWN) {
+
+                // intialize a varible to store readings from the remote
+                int command = IrReceiver.decodedIRData.command;
+                
+                // Only process the three remote buttons
+                if (command == 70 || command == 21 || command == 22) {
+
+                // Print the button's command code
+                    Serial.println(command);
+                    // pluse button: 70 means higher speed
+                    if (command == 70){
+                    motorSpeed += 50;
+                    }
+                    //minus button: 21 means lower speed
+                    else if (command == 21){
+                    motorSpeed -= 50;
+                    }
+                    //stop motor if 0 is pressed: 22 means stop motor
+                    else if (command == 22) {
+                    motorSpeed = 0;
+                    }
+                    // Prevent values below 0 or above 255
+                    motorSpeed = constrain(motorSpeed, 0, 255);
+
+                    // Send the updated PWM value to pin 9
+                    analogWrite(MOTOR_PIN, motorSpeed);
+
+                    
+
+                    // Print the current motor PWM value
+                    Serial.println(motorSpeed);
+                }
+                }
+                // Prepare the receiver for the next signal
+                IrReceiver.resume();
+
+            }
+        }
+
+  
+
+
+        </code></pre>
+      </div>
+      <div class="item">
+        <h2>Circut's Operation:</h2>
+        <p>Here is a link to the circuit operation:</p>
+        <a href="https://youtube.com/shorts/238f2iYrwfA?feature=share" >Operation Link</a>
+      </div>
+      <div class="item">
+        <h2>Answers:</h2>
+        <P>Additional questions answers:</P>
+        <p>1: According to the IRLZ44N datasheet, the absolute maximum continuous current between the Drain (pin 2) and Source (pin 3) is 47 A at a temperature of 25°C. </p>
+        <p>2: <strong>Component Datasheets</strong>
+            <ul>
+                <li>Arduino Uno R3 (ELEGOO-compatible board): <a href = "https://docs.arduino.cc/resources/datasheets/A000066-datasheet.pdf?_gl=1*1c4c8fh*_up*MQ..*_ga*MTQ0Mjc3MzgzMC4xNzk0NDc2NTYy*_ga_NEXN8H46L5*czE3OTQ0NzY1NjEkbzEkZzAkdDE3OTQ0NzY1NjEkajYwJGwwJGgyMTE2MTU5MzYz" >Datasheet</a></li>
+                <li>DC Motor, Pololu 130-Size 6V: <a href = "https://www.berrybase.ch/en/product-datasheet/019234a4d54b70be8b1333e53a95a4af/create" >Datasheet</a></li>
+                <li>IRLZ44N N-MOSFET:<a href ="https://www.digikey.com/en/products/detail/infineon-technologies/IRLZ44NPBF/811808?_gl=1*b2fmsl*_up*MQ..*_gs*MQ..&gclid=CjwKCAiAqabXBhBUEiwAw_SQpUptXjCRd0g5MUlTOAbiEzqN6PB2NGRo1PnGpFy8G3ISg6MUbAbx4RoCPSYQAvD_BwE&gclsrc=aw.ds&gbraid=0AAAAADrbLlgF4zcEQtJr7VJ27GmQyz6bO">Datasheet</a> </li>
+                <li>1N4007 Flyback Diode:<a href ="https://www.vishay.com/docs/88503/1n4001.pdf">Datasheet</a></li>
+                <li>C1, 100 µF, 10V Electrolytic Capacitor:<a href ="https://www.arduino.cc/documents/datasheets/cap100uF.pdf">Datasheet</a> </li>
+                <li>C2, 0.1 µF (100 nF), 50V Ceramic Capacitor: <a href ="https://pim.murata.com/en-us/pim/details/?partNum=RDE5C1H104J2K1H03B" >Datasheet</a></li>
+            </ul>
+            <img src="HCDE 439, A5 q2.jpg"/>
+        <p>3: Schematic:</p>
+        <img src="HCDE 439, A5 q3.jpg"/>
+        <p>Pseudo code: </p>
+        <code><pre>
+            int enable1 = 7; // Pin 7 connected to enable1 
+            int enable2 = 8; // Pin 8 connected to enable2
+        
+            int motor_ccw1 = 6; // Pin 6 connected to motor control 1A 
+            int motor_ccw2 = 10; // Pin 10 connected to 3A
+                
+            int motor_cw1 = 3; //Pin 3 connected to 2A
+            int motor_cw2 = 13;  // Pin 13 connected to motor control 4A
+            
+
+            void setup() {
+            // Set the pins
+            pinMode(enable1, OUTPUT);
+            pinMode(motor_ccw1, OUTPUT);
+            pinMode(motor_cw1, OUTPUT);
+
+            pinMode(enable2, OUTPUT);
+            pinMode(motor_ccw2, OUTPUT);
+            pinMode(motor_cw2, OUTPUT);
+
+            // Enable the first motor driver all the time
+            digitalWrite(enable1, HIGH);
+            digitalWrite(enable2, HIGH);
+            }
+            void loop() {
+            //brake the motor
+            digitalWrite(motor_ccw1, LOW);
+            digitalWrite(motor_cw1, LOW);
+            digitalWrite(motor_ccw2, LOW);
+            digitalWrite(motor_cw2, LOW);
+            delay(100);
+            //run both motor CCW 
+            digitalWrite(motor_ccw1, HIGH);
+            digitalWrite(motor_cw1, LOW);
+            digitalWrite(motor_ccw2, HIGH);
+            digitalWrite(motor_cw2, LOW);
+            delay(1000);
+            //stop both motors
+            digitalWrite(motor_ccw1, LOW);
+            digitalWrite(motor_cw1, LOW);
+            digitalWrite(motor_ccw2, LOW);
+            digitalWrite(motor_cw2, LOW);
+            delay(100);
+            //run both motor CW
+            digitalWrite(motor_ccw1, LOW);
+            digitalWrite(motor_cw1, HIGH);
+            digitalWrite(motor_ccw2, LOW);
+            digitalWrite(motor_cw2, HIGH);
+            delay(1000);
+
+            //run one motor CCW, one CW
+            digitalWrite(motor_ccw1, HIGH);
+            digitalWrite(motor_cw1, LOW);
+            digitalWrite(motor_ccw2, LOW);
+            digitalWrite(motor_cw2, HIGH);
+            delay(1000);
+
+            //run one motor CW, one CCW
+            digitalWrite(motor_ccw1, LOW);
+            digitalWrite(motor_cw1, HIGH);
+            digitalWrite(motor_ccw2, HIGH);
+            digitalWrite(motor_cw2, LOW);
+            delay(1000);
+            }
+
+        </code></pre>
+
+        <P>4: I used AI to help me check my circuit connections since I was not familiar with the power supply module. I also used it to debug my readings and code. One problem I faced was that the IR receiver stopped responding to button presses when the motor speed increased, and the Serial Monitor kept showing a command value of 0. AI helped me understand that electrical noise from the motor could be interfering with the IR receiver. To improve this, I added two ceramic capacitors, one across the motor and another across the IR receiver's power connections. I also connected the IR receiver's ground directly to the Arduino GND and updated my code to ignore repeated and invalid commands. These changes improved the remote's response, although some lag remained at higher motor speeds. I also discussed these issues with the instructor who recommened adding the 2 capacitors to reduce the noise .</P>
+
+        <p>Examples of prompts I used:</p>
+        <ul>
+        <li>"Why do I keep getting repetitive readings from my IR remote when I only press the button once? How can I prevent the same command from being read multiple times?"</li>
+        <p>Output: "The IR remote can send repeated signals when a button is held down, and the receiver may detect those repeated commands. The IRremote library provides IRDATA_FLAGS_IS_REPEAT, which can be used to identify repeated signals. Adding a condition to ignore repeat flags helps prevent the motor speed from changing multiple times when holding a button."</p>
+        <li>"Why do I need resistors for my MOSFET circuit when I didn't use any resistors in my previous LED strip assignment?"</li>
+        <p>Output:"A MOSFET can operate without external gate resistors, which is why the previous LED strip circuit worked. However, a 10kΩ pull-down resistor is recommended between the Gate and Source to keep the MOSFET off when the Arduino is starting up. A 220Ω resistor between the Arduino pin and Gate can also help limit brief current spikes when switching."</p>
+        <li>"Can you help me check my DC motor circuit connections? ( I attached a pic of my circuit ) "</li>
+        <p> Output helped me walk through the wiring to make sure everything is wired correctly.</p>
+        </ul></P>
+      </div>
+
+
+  </body>
+</html>
