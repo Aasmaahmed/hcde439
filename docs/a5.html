@@ -26,8 +26,35 @@
         <h2>Circut:</h2>
         <p>Circut setup usingArduino Uno, DC motor as my high-load output device because it can draw more current than an Arduino pin can safely provide, IRLZ44N N-MOSFET, IR receiver and remote, External 5V power supply, 1N4007 flyback diode, 2 104pf ceramic capacitors.</p>
         <img src="HCDE 439, A5 Circuit.jpg" />
-
       </div>
+
+      <div>
+        
+        <p><strong>Expected Voltages:</strong></p>
+
+        <p>I used an external power supply set to 5V to power my DC motor. The Arduino sends a PWM signal from pin 9 to the MOSFET Gate. When the signal is HIGH, the Gate voltage is approximately 5V, allowing the MOSFET to turn ON and current to flow through the motor. When the signal is LOW, the Gate voltage is approximately 0V, turning the MOSFET OFF. The MOSFET Source is connected to GND (0V). When the MOSFET is fully ON, the Drain voltage should be close to 0V, allowing almost the full 5V to be applied across the motor. </p>    
+        
+      </div>
+      <div>
+        <p><strong>Motor Current Calculation </strong></P>
+
+       <p>I used a small 3–6V DC motor powered by an external 5V power supply. Since I could not find the exact current rating for my motor, I used a comparable 130-size DC motor from Pololu to estimate the current. According to its specifications, the motor draws approximately 70mA when spinning freely and 800mA when stalled at 6V.
+
+        First, I calculated the approximate motor resistance:
+
+        R = V / I = 6V / 0.8A = 7.5 ohms.
+
+        Then I used this resistance to estimate the stall current at my 5V supply:
+
+        I = V / R = 5V / 7.5 ohms = 0.667A = 667mA.
+
+        The IRLZ44N MOSFET has a maximum continuous Drain current rating of 47A at a case temperature of 25°C. Comparing the estimated motor stall current to this rating:
+
+        0.667A < 47A.
+
+        Based on this comparable motor, the estimated current is much lower than the MOSFET's stated maximum rating. However, this is only an estimate because my actual motor may have different specifications, and the MOSFET's safe operating current also depends on its temperature and cooling conditions.</p>
+      </div>
+
       <div class="item firmware">
         <h2>Firmware:</h2>
         <p>Ardunio code snippet:</p>
@@ -111,7 +138,7 @@
       <div class="item">
         <h2>Answers:</h2>
         <P>Additional questions answers:</P>
-        <p>1: According to the IRLZ44N datasheet, the absolute maximum continuous current between the Drain (pin 2) and Source (pin 3) is 47 A at a temperature of 25°C. </p>
+        <p>1: According to the IRLZ44N datasheet, the absolute maximum continuous current between the Drain (pin 2) and Source (pin 3) is 47A at a case temperature of 25°C. In my circuit, the MOSFET controls the current flowing through the DC motor, which is powered by an external 5V power supply. The actual current depends on how much the motor draws and is not necessarily 47A. The MOSFET's maximum current rating also depends on its temperature and operating conditions.</p>
         <p>2: <strong>Component Datasheets</strong>
             <ul>
                 <li>Arduino Uno R3 (ELEGOO-compatible board): <a href = "https://docs.arduino.cc/resources/datasheets/A000066-datasheet.pdf?_gl=1*1c4c8fh*_up*MQ..*_ga*MTQ0Mjc3MzgzMC4xNzk0NDc2NTYy*_ga_NEXN8H46L5*czE3OTQ0NzY1NjEkbzEkZzAkdDE3OTQ0NzY1NjEkajYwJGwwJGgyMTE2MTU5MzYz" >Datasheet</a></li>
