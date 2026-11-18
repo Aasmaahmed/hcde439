@@ -1,6 +1,10 @@
 const BAUD_RATE = 9600; // This should match the baud rate in your Arduino sketch
 const MIN_DIAMETER = 10;
-const MAX_DIAMETER = 40;
+const MAX_DIAMETER = 1000;
+
+  let ballx = 200;
+  let bally = 200;
+  let speed = 50;
 
 let port, connectBtn; // Declare global variables
 
@@ -22,15 +26,30 @@ function draw() {
   let arr = str.trim().split(","); // Trim whitespace and split on commas
 
   // Convert each element to a number and map it to the desired range
-  let x = map(Number(arr[0]), 512, 1023, 0, windowWidth/2);
-  let y = map(Number(arr[1]), 512, 1023, 0, windowHeight/2);
+  let x = Number(arr[0]);
+  let y = Number(arr[1]);
   let diameter = map(Number(arr[2]), 512, 1023, MIN_DIAMETER, MAX_DIAMETER);
+
+
+
+  if (x > 550){
+    ballx += speed;
+  }
+  else if(x < 450){
+    ballx -= speed;
+  }
+  if (y > 550){
+    bally += speed;
+  }
+  else if(y < 450){
+    bally -= speed;
+  }
 
   //Draw with our new data
   background("teal");
 
   // Draw a circle using our readings
-  circle(x, y, diameter);
+  circle(ballx, bally, diameter);
 }
 
 // Three helper functions for managing the serial connection.
