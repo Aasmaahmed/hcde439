@@ -22,9 +22,12 @@ function draw() {
   let arr = str.trim().split(","); // Trim whitespace and split on commas
 
   // Convert each element to a number and map it to the desired range
-  let x = map(Number(arr[0]), 512, 1023, 0, windowWidth);
-  let y = map(Number(arr[1]), 512, 1023, 0, windowHeight);
+  let x = map(Number(arr[0]), 512, 1023, 0, windowWidth/2);
+  let y = map(Number(arr[1]), 512, 1023, 0, windowHeight/2);
   let diameter = map(Number(arr[2]), 512, 1023, MIN_DIAMETER, MAX_DIAMETER);
+
+  //Draw with our new data
+  background("teal");
 
   // Draw a circle using our readings
   circle(x, y, diameter);
