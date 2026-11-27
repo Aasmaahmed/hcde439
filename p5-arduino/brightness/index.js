@@ -2,6 +2,8 @@ const BAUD_RATE = 9600;
 
 let port, connectBtn;
 let brightness = 0;
+let button = 0;
+
 
 function setup() {
   setupSerial();
@@ -27,6 +29,12 @@ function draw() {
   fill(255);
   text("Brightness: " + brightness, windowWidth / 2, windowHeight / 2 - 40);
   text("Move the mouse left/right to change brightness", windowWidth / 2, windowHeight / 2 + 40);
+  if (button = 0){
+    brightness = 255;
+  } 
+  else {
+    brightness = 0;
+  }
 }
 
 function mouseMoved() {
