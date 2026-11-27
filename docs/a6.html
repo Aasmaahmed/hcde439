@@ -25,6 +25,7 @@
       <div class="item">
         <h2>Circut:</h2>
         <p>The circuit consists of an Arduino Uno, a photoresistor connected to A1 with a 10kΩ resistor, a potentiometer connected to A0, and a 16×2 LCD screen with a 220Ω resistor to limit the backlight current. The photoresistor and potentiometer serve as inputs, while the LCD serves as the output. All components are powered by the Arduino’s 5V supply and share a common ground.</p>
+        <p>I connected the LCD contrast pin (VO) directly to ground instead of using a separate potentiometer. After testing the LCD, I found that the characters were clearly visible, so an adjustable contrast control was unnecessary. This allowed me to use the potentiometer as an interactive input for my project instead. </p>
         <img src="HCDE439, A6, Circuit.jpg" />
       </div>
 
