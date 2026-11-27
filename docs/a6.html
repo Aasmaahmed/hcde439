@@ -18,7 +18,7 @@
       <div class="item">
         <h2>Schematic:</h2>
         <p>
-        Schematic:
+        I connected the photoresistor and a 10k ohms resistor in a voltage divider configuration to measure changes in light intensity using A1. The potentiometer is connected to A0 to control brightness. The LCD is operated in 4-bit mode to reduce the number of Arduino pins needed, and a 220 ohms resistor limits the backlight current.
         </p>
         <img src="HCDE439, A6 schematic.jpg" />
       </div>
@@ -33,6 +33,7 @@
         
         <p><strong>Resistance Calculations:</strong></p>
 
+        <p>The Arduino's analogRead() function returns values between 0 and 1023. After testing the photoresistor under different lighting conditions, I obtained readings of approximately 200 in dark conditions and 800 in bright conditions. I selected 450 as the threshold to distinguish between day and night modes. I also mapped the potentiometer readings from 0–1023 to 0–100 to represent brightness as a percentage.</p>
         <p>I used a 220Ω resistor in series with the LCD backlight to limit the current. Based on a reference datasheet with a forward voltage of 4.1V and a supply voltage of 5V, the estimated current is 4.09mA. This provided sufficient brightness for my project while limiting power consumption.  </p>    
         <a href="https://www.ezuim.com/d_sheets/lcd_1602.pdf " >reference LCD Datasheet</a>
         <img src="HCDE439, A6, calculations.jpg" />
@@ -174,9 +175,10 @@
       </div>
 
        <div class="item">
-        <h2>A6 html files</h2>
-        <a href="https://vscode.dev/github/Aasmaahmed/hcde439/blob/main/p5-arduino/A6" > Link</a>
-      </div>
-
+      
+      <a href="p5-arduino/A6/index.html" target="_blank">
+      Interactive Day & Night Garden
+      </a>
+       </div>
       
       
